@@ -30,6 +30,18 @@ describe Robot do
     expect(@robot.facing).to eq "NORTH"
   end
 
+  it "reports correctly with position and coords" do
+    p = Robot.new(1,3,"EAST")
+    expect(p.report).to eq("1,3,EAST")
+    q = Robot.new(5,5,"WEST")
+    expect(q.report).to eq("5,5,WEST")
+  end
+
+  it "raises error when coordinates are out of range" do
+    expect {Robot.new(6,3,"EAST")}.to raise_error('Incorrect Coordinates')
+    expect {Robot.new(-2,9,"EAST")}.to raise_error('Incorrect Coordinates')
+  end
+
 
 
 

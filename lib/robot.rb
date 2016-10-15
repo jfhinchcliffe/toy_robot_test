@@ -1,8 +1,12 @@
+require_relative "./table.rb"
 class Robot
 
   attr_reader :x, :y, :facing
 
   def initialize(x,y,facing)
+    unless Table.valid_position(x,y)
+      raise 'Incorrect Coordinates'
+    end
     @x = x
     @y = y
     @facing = facing
@@ -10,6 +14,10 @@ class Robot
 
   def turn(direction)
     rotate(direction)
+  end
+
+  def report
+    "#{@x},#{@y},#{@facing}"
   end
 
 
