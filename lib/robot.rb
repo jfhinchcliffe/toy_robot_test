@@ -17,6 +17,10 @@ class Robot
     "#{@x},#{@y},#{@facing}"
   end
 
+  def move
+    @x, @y, = Table.move(@x, @y, @facing)
+  end
+
 
   private
     def rotate(direction)
