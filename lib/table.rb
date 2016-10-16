@@ -1,4 +1,4 @@
-class Table
+module Table
 
   TABLE_SIZE = {max: 5, min: 0}
 

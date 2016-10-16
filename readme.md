@@ -5,6 +5,11 @@ I'm on a 1 week break at bootcamp right now. Trying to do the Toy Robot Test to:
 - Practice TDD
 - Get an idea of the kinds of code that junior devs are expected to know
 
+##Todo
+- Write tests for interface.rb (didn't think they would really be required until I did it)
+- Clean up interface and provide meaningful user feedback
+- Should Table be a class or a module? Works as a module, but not sure if this is the right way to do it
+
 ## Description:
 The application is a simulation of a toy robot moving on a square tabletop, of dimensions 5 units x 5 units.
 There are no other obstructions on the table surface.
