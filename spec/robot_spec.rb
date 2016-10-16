@@ -37,12 +37,4 @@ describe Robot do
     expect(q.report).to eq("5,5,WEST")
   end
 
-  it "raises error when coordinates are out of range" do
-    expect {Robot.new(6,3,"EAST")}.to raise_error('Incorrect Coordinates')
-    expect {Robot.new(-2,9,"EAST")}.to raise_error('Incorrect Coordinates')
-  end
-
-
-
-
 end

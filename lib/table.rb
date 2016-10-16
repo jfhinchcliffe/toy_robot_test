@@ -1,13 +1,14 @@
 class Table
 
-  TABLE_SIZE = {max_x: 5, max_y: 5}
+  TABLE_SIZE = {max: 5, min: 0}
 
-  def self.valid_position(x,y)
-    if x <= TABLE_SIZE[:max_x] && x >= 0 &&
-    y <= TABLE_SIZE[:max_y] && y >= 0
+  def self.valid_position?(x,y)
+    if x.between?(TABLE_SIZE[:min], TABLE_SIZE[:max]) && y.between?(TABLE_SIZE[:min], TABLE_SIZE[:max])
       return true
     end
     false
   end
+
+
 
 end

@@ -4,9 +4,6 @@ class Robot
   attr_reader :x, :y, :facing
 
   def initialize(x,y,facing)
-    unless Table.valid_position(x,y)
-      raise 'Incorrect Coordinates'
-    end
     @x = x
     @y = y
     @facing = facing
