@@ -9,12 +9,12 @@ module Menu
     exit = false
     while exit != true
       puts "Toy Robot Simulator 🤖 "
+      puts "=" * 20
       if @robot
         puts "Robot currently at #{@robot.x}, #{@robot.y}, #{@robot.facing}"
       else
         puts "Robot has NOT been placed. Please use the place command"
       end
-      puts "Menu"
       puts "Valid commands are:"
       puts "PLACE X,Y,F"
       puts "MOVE"
@@ -22,10 +22,9 @@ module Menu
       puts "RIGHT"
       puts "REPORT"
       puts "X to exit"
+      print "Enter command > "
       command = gets.strip
       case command
-      when "1"
-        instructions
       when "x"
         exit = true
       else
@@ -33,17 +32,6 @@ module Menu
       end
     end
 
-  end
-
-  def self.instructions
-    puts "First, place the robot at and coordinate on the 5x5 table by using:"
-    puts "PLACE X,Y,DIRECTION"
-    puts "where X and Y are coordinates, and DIRECTION is NORTH, EAST, SOUTH or WEST"
-    puts "once a robot has been placed, you can move it by entering MOVE"
-    puts "MOVE will move the robot one step in the direction it is facing (if there is room)"
-    puts "REPORT will return the robots current location and direction"
-    puts "Press enter to return to the menu"
-    gets
   end
 
   def self.check_command(command)
@@ -69,7 +57,7 @@ module Menu
         puts "Robot is currently at #{@robot.report}"
       end
     else
-      puts "I don't understand the command."
+      puts "I don't understand the command - please use a valid one"
     end
     gets
     system "clear"
