@@ -5,6 +5,11 @@ I'm on a 1 week break at bootcamp right now. Trying to do the Toy Robot Test to:
 - Practice TDD
 - Get an idea of the kinds of code that junior devs are expected to know
 
+## Running the program
+- Download
+- Navigate to root directory
+- run ```ruby ./lib/interface.rb```
+
 ##Todo
 - Write tests for interface.rb (didn't think they would really be required until I did it)
 - Clean up interface and provide meaningful user feedback

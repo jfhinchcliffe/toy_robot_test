@@ -1,6 +1,6 @@
 module Table
 
-  TABLE_SIZE = {max: 5, min: 0}
+  TABLE_SIZE = {max: 4, min: 0}
 
   def self.valid_position?(x,y)
     if x.between?(TABLE_SIZE[:min], TABLE_SIZE[:max]) && y.between?(TABLE_SIZE[:min], TABLE_SIZE[:max])

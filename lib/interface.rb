@@ -10,6 +10,8 @@ module Menu
     while exit != true
       puts "Toy Robot Simulator 🤖 "
       puts "=" * 20
+      puts "Move a toy robot around a 5x5 table"
+      puts "valid coordinates range from 0,0 (south west corner) to 4,4 (north east corner)"
       if @robot
         puts "Robot currently at #{@robot.x}, #{@robot.y}, #{@robot.facing}"
       else
@@ -22,6 +24,7 @@ module Menu
       puts "RIGHT"
       puts "REPORT"
       puts "X to exit"
+      puts "Commands are not case sensitive."
       print "Enter command > "
       command = gets.strip
       case command
@@ -64,5 +67,5 @@ module Menu
   end
 
 end
-
+system "clear"
 Menu.menu
