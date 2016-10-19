@@ -37,10 +37,10 @@ describe Robot do
     expect(q.report).to eq("5,5,WEST")
   end
 
-  it "moves" do
+  it "moves, but not over edge of table" do
     p = Robot.new(1,3,"EAST")
     4.times { p.move }
-    expect(p.y).to eq(5)
+    expect(p.y).to eq(4)
   end
 
 end

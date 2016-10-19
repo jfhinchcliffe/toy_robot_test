@@ -67,5 +67,5 @@ module Menu
   end
 
 end
-system "clear"
-Menu.menu
+# system "clear"
+# Menu.menu
