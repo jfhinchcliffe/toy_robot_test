@@ -1,42 +1,65 @@
 require_relative "./table.rb"
+require_relative "./messages.rb"
+
 class Robot
 
-  attr_reader :x, :y, :facing
+  VALID_DIRECTIONS = ["NORTH", "EAST", "SOUTH", "WEST"]
 
-  def initialize(x,y,facing)
-    @x = x
-    @y = y
-    @facing = facing
+  attr_reader :x, :y, :direction
+
+  def initialize(args)
+    @x = args[:x]
+    @y = args[:y]
+    @direction = args[:direction]
+    @table = Table.new
   end
 
-  def turn(direction)
-    rotate(direction)
+  def turn(turn)
+    rotate_direction(get_new_direction_index(turn))
   end
 
   def report
-    "#{@x},#{@y},#{@facing}"
+    "#{@x},#{@y},#{@direction}"
   end
 
   def move
-    @x, @y, = Table.move(@x, @y, @facing)
+    case @direction
+    when "NORTH"
+      @table.valid_position?({x: @x + 1, y: @y}) ? @x += 1 : Messages.invalid_move(@direction)
+    when "SOUTH"
+      @table.valid_position?({x: @x - 1, y: @y}) ? @x -= 1 : Messages.invalid_move(@direction)
+    when "EAST"
+      @table.valid_position?({x: @x, y: @y + 1}) ? @y += 1 : Messages.invalid_move(@direction)
+    when "WEST"
+      @table.valid_position?({x: @x, y: @y - 1}) ? @y -= 1 : Messages.invalid_move(@direction)
+    end
+  end
+
+  def self.valid_directions
+    ["NORTH", "EAST", "SOUTH", "WEST"]
   end
 
 
   private
-    def rotate(direction)
-      valid_facings = ["NORTH", "EAST", "SOUTH", "WEST"]
-      current_facing_location = valid_facings.index(@facing)
-      if direction == "LEFT"
-        current_facing_location -= 1
-      elsif direction == "RIGHT"
-        current_facing_location += 1
-      end
-      if current_facing_location < 0
-        @facing = valid_facings.last
-      elsif current_facing_location > 3
-        @facing = valid_facings.first
-      else
-        @facing = valid_facings[current_facing_location]
+
+    def get_new_direction_index(turn)
+      current_direction_index = VALID_DIRECTIONS.index(@direction)
+      if turn == "LEFT"
+        current_direction_index -= 1
+      elsif turn == "RIGHT"
+        current_direction_index += 1
       end
     end
+
+    def rotate_direction(direction_index)
+      if direction_index < 0
+        @direction = VALID_DIRECTIONS.last
+      elsif direction_index > 3
+        @direction = VALID_DIRECTIONS.first
+      else
+        @direction = VALID_DIRECTIONS[direction_index]
+      end
+    end
+
+
 end

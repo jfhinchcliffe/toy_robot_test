@@ -2,45 +2,43 @@ require 'robot'
 describe Robot do
 
   before(:all) do
-    @robot = Robot.new(0,0,"NORTH")
+    robot = {x: 0, y: 0, direction: "NORTH"}
+    @robot = Robot.new(robot)
   end
 
   it "can initialise a robot" do
     expect(@robot.x).to eq 0
     expect(@robot.y).to eq 0
-    expect(@robot.facing).to eq "NORTH"
+    expect(@robot.direction).to eq "NORTH"
   end
 
   it "can turn left and right" do
     @robot.turn("LEFT")
-    expect(@robot.facing).to eq "WEST"
-    @robot.turn("LEFT")
-    expect(@robot.facing).to eq "SOUTH"
-    @robot.turn("LEFT")
-    expect(@robot.facing).to eq "EAST"
-    @robot.turn("LEFT")
-    expect(@robot.facing).to eq "NORTH"
-    @robot.turn("RIGHT")
-    expect(@robot.facing).to eq "EAST"
-    @robot.turn("RIGHT")
-    expect(@robot.facing).to eq "SOUTH"
-    @robot.turn("RIGHT")
-    expect(@robot.facing).to eq "WEST"
-    @robot.turn("RIGHT")
-    expect(@robot.facing).to eq "NORTH"
+    expect(@robot.direction).to eq "WEST"
   end
 
   it "reports correctly with position and coords" do
-    p = Robot.new(1,3,"EAST")
+    robot = {x: 1, y: 3, direction: "EAST"}
+    p = Robot.new(robot)
     expect(p.report).to eq("1,3,EAST")
-    q = Robot.new(5,5,"WEST")
-    expect(q.report).to eq("5,5,WEST")
+    robot = {x: 3, y: 3, direction: "WEST"}
+    q = Robot.new(robot)
+    expect(q.report).to eq("3,3,WEST")
   end
 
-  it "moves, but not over edge of table" do
-    p = Robot.new(1,3,"EAST")
-    4.times { p.move }
-    expect(p.y).to eq(4)
+  it "moves" do
+    robot = {x: 1, y: 3, direction: "EAST"}
+    y = Robot.new(robot)
+    y.move
+    expect(y.report).to eq("1,4,EAST")
   end
+
+  it "can't move off the table" do
+    robot = {x: 0, y: 0, direction: "SOUTH"}
+    y = Robot.new(robot)
+    y.move
+    expect(y.report).to eq("0,0,SOUTH")
+  end
+
 
 end

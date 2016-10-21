@@ -32,24 +32,18 @@ module Menu
       when "x"
         exit = true
       else
-        check_command(command)
+        verify_command(command)
       end
     end
 
   end
 
-  def self.check_command(command)
+  def self.verify_command(command)
     commands = command.upcase.split(' ')
     first_command = commands.shift
+
     if first_command == "PLACE" && commands.length == 1
-      commands = commands.last.split(',')
-      x = commands.shift.to_i
-      y = commands.shift.to_i
-      facing = commands.shift
-      if Table.valid_position?(x, y) && @valid_directions.include?(facing)
-        @robot = Robot.new(x,y,facing)
-        puts "Robot has been placed"
-      end
+      place(commands)
     end
     unless @robot == false
       if first_command == "MOVE"
@@ -66,5 +60,17 @@ module Menu
     gets
     system "clear"
   end
+
+  private
+    def place(commands)
+      commands = commands.last.split(',')
+      x = commands.shift.to_i
+      y = commands.shift.to_i
+      direction = commands.shift
+      if Table.valid_position?({x: x,y: y}) && Robot.valid_directions.include?(facing)
+        @robot = Robot.new(x: x, y: y, direction: direction)
+        puts "Robot has been placed"
+      end
+    end
 
 end
