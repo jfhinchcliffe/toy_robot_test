@@ -58,7 +58,7 @@ module Menu
         @robot.turn(first_command)
         puts "Robot has turned #{first_command}"
       elsif first_command == "REPORT"
-        puts "Robot is currently at #{@robot.report}"
+        puts @robot.report
       end
     else
       puts "I don't understand the command - please use a valid one"

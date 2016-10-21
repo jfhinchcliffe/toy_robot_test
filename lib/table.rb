@@ -1,30 +1,33 @@
-module Table
+class Table
 
-  TABLE_SIZE = {max: 4, min: 0}
-
-  def self.valid_position?(x,y)
-    if x.between?(TABLE_SIZE[:min], TABLE_SIZE[:max]) && y.between?(TABLE_SIZE[:min], TABLE_SIZE[:max])
-      return true
-    end
-    false
+  def initialize(args = defaults)
+    @x_max = args[:x]
+    @y_max = args[:y]
+    @x_min = 0
+    @y_min = 0
   end
 
-  def self.move(x,y,facing)
-    x_updated = x
-    y_updated = y
-    case facing
+  def valid_position?(args)
+    args[:x].between?(@x_min, @x_max) && args[:y].between?(@y_min, @y_max) ? true : false
+  end
+
+  def valid_move?(args)
+    case args[:direction]
     when "NORTH"
-      x_updated = x + 1 if valid_position?(x + 1, y)
+      valid_position?({x: args[:x] + 1, y: args[:y]})
     when "SOUTH"
-      x_updated = x - 1 if valid_position?(x - 1, y)
+      valid_position?({x: args[:x] - 1, y: args[:y]})
     when "EAST"
-      y_updated = y + 1 if valid_position?(x, y + 1)
+      valid_position?({x: args[:x], y: args[:y] + 1})
     when "WEST"
-      y_updated = y - 1 if valid_position?(x, y - 1)
+      valid_position?({x: args[:x], y: args[:y] - 1})
     end
-    return [x_updated, y_updated, facing]
   end
 
+  private
 
+    def defaults
+      {x: 4, y: 4}
+    end
 
 end

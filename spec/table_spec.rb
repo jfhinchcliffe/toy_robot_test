@@ -1,36 +1,48 @@
 require 'table'
 describe Table do
 
-  it "returns true when coordinates are within TABLE_SIZE range" do
-    result1 = Table.valid_position?(3, 3)
-    result2 = Table.valid_position?(0, 0)
-    result3 = Table.valid_position?(4, 4)
-    expect(result1).to eq true
-    expect(result2).to eq true
-    expect(result3).to eq true
+  before(:all) do
+    @table = Table.new({x: 3, y: 3})
   end
 
-  it "returns false when coordinates are outside TABLE_SIZE range" do
-    result = Table.valid_position?(6, 2)
+  it "valid position returns true when coordinates are within the table range" do
+    result1 = @table.valid_position?({x: 3, y: 3})
+    expect(result1).to eq true
+  end
+
+  it "valid position returns false when coordinates are outside the table range" do
+    result = @table.valid_position?({x: 6, y: 3})
     expect(result).to eq false
   end
 
-  it "moves the robot forward correctly based on faced direction" do
-    p = Table.move(0,0,"NORTH")
-    expect(p).to eq [1,0,"NORTH"]
-    p = Table.move(3,3,"SOUTH")
-    expect(p).to eq [2,3,"SOUTH"]
-    p = Table.move(0,5,"WEST")
-    expect(p).to eq [0,4,"WEST"]
+  it "returns true when a potential move is valid" do
+    result = @table.valid_move?({x: 2,y: 2,direction: "SOUTH"})
+    expect(result).to eq true
   end
 
-  it "does not allow the robot to move off the table" do
-    p = Table.move(0,0,"SOUTH")
-    expect(p).to eq [0,0,"SOUTH"]
-    p = Table.move(5,3,"NORTH")
-    expect(p).to eq [5,3,"NORTH"]
-    p = Table.move(0,0,"WEST")
-    expect(p).to eq [0,0,"WEST"]
+  it "returns false when a potential move is invalid" do
+    result = @table.valid_move?({x: 3,y: 2,direction: "NORTH"})
+    expect(result).to eq false
   end
+
+
+  #
+  # it "moves the robot forward correctly based on faced direction" do
+  #   p = Table.move(0,0,"NORTH")
+  #   expect(p).to eq [1,0,"NORTH"]
+  #   p = Table.move(3,3,"SOUTH")
+  #   expect(p).to eq [2,3,"SOUTH"]
+  #   p = Table.move(0,5,"WEST")
+  #   expect(p).to eq [0,4,"WEST"]
+  # end
+  #
+  # it "does not allow the robot to move off the table" do
+  #   p = Table.move(0,0,"SOUTH")
+  #   expect(p).to eq [0,0,"SOUTH"]
+  #   p = Table.move(5,3,"NORTH")
+  #   expect(p).to eq [5,3,"NORTH"]
+  #   p = Table.move(0,0,"WEST")
+  #   expect(p).to eq [0,0,"WEST"]
+  # end
 
 end
