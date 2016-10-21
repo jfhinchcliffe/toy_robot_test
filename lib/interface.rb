@@ -14,7 +14,7 @@ module Menu
       puts "Move a toy robot around a 5x5 table"
       puts "valid coordinates range from 0,0 (south west corner) to 4,4 (north east corner)"
       if @robot
-        puts "Robot currently at #{@robot.x}, #{@robot.y}, #{@robot.facing}"
+        puts "Robot currently at #{@robot.x}, #{@robot.y}, #{@robot.direction}"
       else
         puts "Robot has NOT been placed. Please use the place command"
       end
@@ -50,7 +50,7 @@ module Menu
         @robot.move
       elsif first_command == "LEFT" || first_command == "RIGHT"
         @robot.turn(first_command)
-        puts "Robot has turned #{first_command}"
+        Messages.robot_turned(first_command)
       elsif first_command == "REPORT"
         puts @robot.report
       end
@@ -62,14 +62,15 @@ module Menu
   end
 
   private
-    def place(commands)
+    def self.place(commands)
       commands = commands.last.split(',')
       x = commands.shift.to_i
       y = commands.shift.to_i
       direction = commands.shift
-      if Table.valid_position?({x: x,y: y}) && Robot.valid_directions.include?(facing)
+      # if Table.valid_position?({x: x,y: y}) && Robot.valid_directions.include?(facing)
+      if Robot.valid_directions.include?(direction)
         @robot = Robot.new(x: x, y: y, direction: direction)
-        puts "Robot has been placed"
+        Messages.robot_placed({x: x, y: y, direction: direction})
       end
     end
 

@@ -9,4 +9,8 @@ module Messages
     puts "Current position: X #{coordinates[:x]} Y #{coordinates[:y]} Direction #{coordinates[:direction]}"
   end
 
+  def self.robot_turned(direction)
+    puts "Robot has turned #{direction}"
+  end
+
 end
