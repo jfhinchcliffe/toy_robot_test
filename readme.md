@@ -8,7 +8,9 @@ I'm on a 1 week break at bootcamp right now. Trying to do the Toy Robot Test to:
 ## Running the program
 - Download
 - Navigate to root directory
-- run ```ruby ./lib/interface.rb```
+- run ```irb```
+- type ```require ('./lib/interface.rb')```
+- type ```Menu.menu```
 
 ##Todo
 - Write tests for interface.rb (didn't think they would really be required until I did it)

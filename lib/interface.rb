@@ -6,6 +6,7 @@ module Menu
   @valid_directions = ["NORTH","SOUTH","EAST","WEST"]
 
   def self.menu
+    system "clear"
     exit = false
     while exit != true
       puts "Toy Robot Simulator 🤖 "
@@ -55,7 +56,7 @@ module Menu
         @robot.move
       elsif first_command == "LEFT" || first_command == "RIGHT"
         @robot.turn(first_command)
-        puts "Robot has turned"
+        puts "Robot has turned #{first_command}"
       elsif first_command == "REPORT"
         puts "Robot is currently at #{@robot.report}"
       end
@@ -67,5 +68,3 @@ module Menu
   end
 
 end
-# system "clear"
-# Menu.menu
