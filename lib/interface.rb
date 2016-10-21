@@ -3,7 +3,7 @@ require_relative "./table.rb"
 module Menu
 
   @robot = false
-  @valid_directions = ["NORTH","SOUTH","EAST","WEST"]
+  VALID_COMMANDS = ["PLACE", "MOVE", "LEFT", "RIGHT", "REPORT"]
 
   def self.menu
     system "clear"
@@ -39,8 +39,17 @@ module Menu
   end
 
   def self.verify_command(command)
+    VALID_COMMANDS.include?(command)
+  end
+
+  def self.split_command(command)
     commands = command.upcase.split(' ')
     first_command = commands.shift
+  end
+
+  def self.execute_command(command)
+    
+  end
 
     if first_command == "PLACE" && commands.length == 1
       place(commands)

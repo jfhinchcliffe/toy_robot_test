@@ -13,4 +13,8 @@ module Messages
     puts "Robot has turned #{direction}"
   end
 
+  def self.invalid_command(command)
+    "#{command} isn't a valid command"
+  end
+
 end
