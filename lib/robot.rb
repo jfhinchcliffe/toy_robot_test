@@ -11,7 +11,7 @@ class Robot
     @x = args[:x]
     @y = args[:y]
     @direction = args[:direction]
-    @table = Table.new
+    @table = args[:table]
   end
 
   def turn(turn)

@@ -32,55 +32,56 @@ module Menu
       when "x"
         exit = true
       else
-        verify_command(command)
+        split_command(command)
       end
     end
 
-  end
-
-  def self.verify_command(command)
-    VALID_COMMANDS.include?(command)
   end
 
   def self.split_command(command)
     commands = command.upcase.split(' ')
-    first_command = commands.shift
+    verify_command?(commands.first) ? execute_command(commands) : Messages.invalid_command(commands.first)
   end
 
-  def self.execute_command(command)
-    
+  def self.verify_command?(command)
+    VALID_COMMANDS.include?(command)
   end
 
-    if first_command == "PLACE" && commands.length == 1
-      place(commands)
-    end
-    unless @robot == false
-      if first_command == "MOVE"
-        @robot.move
-      elsif first_command == "LEFT" || first_command == "RIGHT"
-        @robot.turn(first_command)
-        Messages.robot_turned(first_command)
-      elsif first_command == "REPORT"
-        puts @robot.report
-      end
+  def self.execute_command(commands)
+    command = commands.shift
+    if @robot == false && command != "PLACE"
+      Messages.robot_not_placed
     else
-      puts "I don't understand the command - please use a valid one"
-    end
-    gets
-    system "clear"
-  end
-
-  private
-    def self.place(commands)
-      commands = commands.last.split(',')
-      x = commands.shift.to_i
-      y = commands.shift.to_i
-      direction = commands.shift
-      # if Table.valid_position?({x: x,y: y}) && Robot.valid_directions.include?(facing)
-      if Robot.valid_directions.include?(direction)
-        @robot = Robot.new(x: x, y: y, direction: direction)
-        Messages.robot_placed({x: x, y: y, direction: direction})
+      case command
+      when "PLACE"
+        commands.length > 0 ? place(commands) : Messages.robot_not_placed
+      when "MOVE"
+        @robot.move
+      when "LEFT", "RIGHT"
+        @robot.turn(command)
+      when "REPORT"
+        @robot.report
       end
     end
+  end
+
+  def self.place(commands)
+    commands = commands.last.split(',')
+    x = commands.shift.to_i
+    y = commands.shift.to_i
+    direction = commands.shift
+    create_table
+    if @table.valid_position?({x: x, y: y})
+      @robot = Robot.new({x: x, y: y, direction: direction, table: @table})
+      Messages.robot_placed({x: @robot.x, y: @robot.y, direction: @robot.direction})
+    else
+      Messages.invalid_command("#{x} #{y} #{direction}")
+    end
+
+  end
+
+  def self.create_table
+    @table = Table.new({x: 4, y: 4})
+  end
 
 end
