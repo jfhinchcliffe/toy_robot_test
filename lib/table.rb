@@ -1,4 +1,3 @@
-
 class Table
 
   def initialize(args = defaults)
@@ -12,10 +11,8 @@ class Table
     args[:x].between?(@x_min, @x_max) && args[:y].between?(@y_min, @y_max) ? true : false
   end
 
-  private
-
-    def defaults
-      {x: 4, y: 4}
-    end
+  def defaults
+    {x: 4, y: 4}
+  end
 
 end

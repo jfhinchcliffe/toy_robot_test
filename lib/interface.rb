@@ -70,10 +70,12 @@ module Menu
     x = commands.shift.to_i
     y = commands.shift.to_i
     direction = commands.shift
-    create_table
-    if @table.valid_position?({x: x, y: y})
-      @robot = Robot.new({x: x, y: y, direction: direction, table: @table})
-      Messages.robot_placed({x: @robot.x, y: @robot.y, direction: @robot.direction})
+    if Robot.valid_directions.include?(direction)
+      create_table
+      if @table.valid_position?({x: x, y: y})
+        @robot = Robot.new({x: x, y: y, direction: direction, table: @table})
+        Messages.robot_placed({x: @robot.x, y: @robot.y, direction: @robot.direction})
+      end
     else
       Messages.invalid_command("#{x} #{y} #{direction}")
     end

@@ -22,4 +22,8 @@ module Messages
     puts "#{command} isn't a valid command".colorize(:red)
   end
 
+  def self.robot_report(command)
+    puts "Robot at: #{command}".colorize(:green)
+  end
+
 end

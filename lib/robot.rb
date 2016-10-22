@@ -19,7 +19,7 @@ class Robot
   end
 
   def report
-    "#{@x},#{@y},#{@direction}"
+    Messages.robot_report("#{@x},#{@y},#{@direction}")
   end
 
   def move
@@ -36,30 +36,26 @@ class Robot
   end
 
   def self.valid_directions
-    ["NORTH", "EAST", "SOUTH", "WEST"]
+    VALID_DIRECTIONS
   end
 
-
-  private
-
-    def get_new_direction_index(turn)
-      current_direction_index = VALID_DIRECTIONS.index(@direction)
-      if turn == "LEFT"
-        current_direction_index -= 1
-      elsif turn == "RIGHT"
-        current_direction_index += 1
-      end
+  def get_new_direction_index(turn)
+    current_direction_index = VALID_DIRECTIONS.index(@direction)
+    if turn == "LEFT"
+      current_direction_index -= 1
+    elsif turn == "RIGHT"
+      current_direction_index += 1
     end
+  end
 
-    def rotate_direction(direction_index)
-      if direction_index < 0
-        @direction = VALID_DIRECTIONS.last
-      elsif direction_index > 3
-        @direction = VALID_DIRECTIONS.first
-      else
-        @direction = VALID_DIRECTIONS[direction_index]
-      end
+  def rotate_direction(direction_index)
+    if direction_index < 0
+      @direction = VALID_DIRECTIONS.last
+    elsif direction_index > 3
+      @direction = VALID_DIRECTIONS.first
+    else
+      @direction = VALID_DIRECTIONS[direction_index]
     end
-
+  end
 
 end
