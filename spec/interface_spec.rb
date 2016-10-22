@@ -1,8 +1,8 @@
 require 'interface'
 describe Menu do
 
-  it "places a new valid robot" do
-    
+  it "only accepts valid commands" do
+    expect(Menu.verify_command?("PLACE")).to be true
   end
 
 end

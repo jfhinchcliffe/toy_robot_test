@@ -14,12 +14,12 @@ module Menu
       puts "Move a toy robot around a 5x5 table"
       puts "valid coordinates range from 0,0 (south west corner) to 4,4 (north east corner)"
       if @robot
-        puts "Robot currently at #{@robot.x}, #{@robot.y}, #{@robot.direction}"
+        Messages.robot_placed({x: @robot.x, y: @robot.y, direction: @robot.direction}) #{@robot.x}, #{@robot.y}, #{@robot.direction}"
       else
         puts "Robot has NOT been placed. Please use the place command"
       end
       puts "Valid commands are:"
-      puts "PLACE X,Y,F"
+      puts "PLACE X,Y,DIRECTION (North, East, South or West)"
       puts "MOVE"
       puts "LEFT"
       puts "RIGHT"
@@ -28,6 +28,7 @@ module Menu
       puts "Commands are not case sensitive."
       print "Enter command > "
       command = gets.strip
+      system "clear"
       case command
       when "x"
         exit = true
@@ -60,26 +61,28 @@ module Menu
       when "LEFT", "RIGHT"
         @robot.turn(command)
       when "REPORT"
-        @robot.report
+        puts @robot.report
       end
     end
   end
 
   def self.place(commands)
-    commands = commands.last.split(',')
-    x = commands.shift.to_i
-    y = commands.shift.to_i
-    direction = commands.shift
-    if Robot.valid_directions.include?(direction)
-      create_table
-      if @table.valid_position?({x: x, y: y})
-        @robot = Robot.new({x: x, y: y, direction: direction, table: @table})
-        Messages.robot_placed({x: @robot.x, y: @robot.y, direction: @robot.direction})
-      end
+    x, y, direction = format_place_input(commands)
+    create_table
+    if Robot.valid_directions.include?(direction) && @table.valid_position?({x: x, y: y})
+      @robot = Robot.new({x: x, y: y, direction: direction, table: @table})
     else
       Messages.invalid_command("#{x} #{y} #{direction}")
     end
+  end
 
+  def self.format_place_input(commands)
+    commands = commands.last.split(',')
+    formatted = []
+    formatted << commands[0].to_i
+    formatted << commands[1].to_i
+    formatted << commands[2]
+    formatted
   end
 
   def self.create_table

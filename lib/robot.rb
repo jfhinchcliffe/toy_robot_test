@@ -19,7 +19,11 @@ class Robot
   end
 
   def report
-    Messages.robot_report("#{@x},#{@y},#{@direction}")
+    "#{@x},#{@y},#{@direction}"
+  end
+
+  def self.valid_directions
+    VALID_DIRECTIONS
   end
 
   def move
@@ -33,10 +37,6 @@ class Robot
     when "WEST"
       @table.valid_position?({x: @x, y: @y - 1}) ? @y -= 1 : Messages.invalid_move(@direction)
     end
-  end
-
-  def self.valid_directions
-    VALID_DIRECTIONS
   end
 
   def get_new_direction_index(turn)
