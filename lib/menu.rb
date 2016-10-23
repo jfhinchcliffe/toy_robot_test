@@ -77,12 +77,12 @@ module Menu
   end
 
   def self.format_place_input(commands)
-    commands = commands.last.split(',')
-    formatted = []
-    formatted << commands[0].to_i
-    formatted << commands[1].to_i
-    formatted << commands[2]
-    formatted
+    x_s, y_s, direction = commands.last.split(',')
+    [
+      x_s.to_i,
+      y_s.to_i,
+      direction
+    ]
   end
 
   def self.create_table
