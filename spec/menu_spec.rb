@@ -1,4 +1,4 @@
-require 'interface'
+require 'menu'
 describe Menu do
 
   it "only accepts valid commands" do
