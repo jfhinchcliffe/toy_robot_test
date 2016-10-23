@@ -9,7 +9,7 @@ I'm on a 1 week break at bootcamp right now. Trying to do the Toy Robot Test to:
 - Download
 - Navigate to root directory
 - run ```irb```
-- type ```require ('./lib/interface.rb')```
+- type ```require ('./lib/menu.rb')```
 - type ```Menu.menu```
 
 ##Todo
