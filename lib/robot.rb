@@ -47,11 +47,12 @@ class Robot
       current_direction_index += 1
     end
   end
+
   # Consider Modulo for this (use remainder)
   def rotate_direction(direction_index)
     if direction_index < 0
       @direction = VALID_DIRECTIONS.last
-    elsif direction_index > 3
+    elsif direction_index > (VALID_DIRECTIONS.length - 1)
       @direction = VALID_DIRECTIONS.first
     else
       @direction = VALID_DIRECTIONS[direction_index]

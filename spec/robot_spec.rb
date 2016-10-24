@@ -16,6 +16,10 @@ describe Robot do
   it "can turn left and right" do
     @robot.turn("LEFT")
     expect(@robot.direction).to eq "WEST"
+    @robot.turn("RIGHT")
+    expect(@robot.direction).to eq "NORTH"
+    @robot.turn("RIGHT")
+    expect(@robot.direction).to eq "EAST"
   end
 
   it "reports correctly with position and coords" do
