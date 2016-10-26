@@ -37,13 +37,13 @@ class Robot
   def move
     case @direction
     when "NORTH"
-      @table.valid_position?({x: @x + 1, y: @y}) ? @x += 1 : Messages.invalid_move(@direction)
+      @table.valid_position?({place: {x: @x + 1, y: @y}}) ? @x += 1 : Messages.invalid_move(@direction)
     when "SOUTH"
-      @table.valid_position?({x: @x - 1, y: @y}) ? @x -= 1 : Messages.invalid_move(@direction)
+      @table.valid_position?({place: {x: @x - 1, y: @y}}) ? @x -= 1 : Messages.invalid_move(@direction)
     when "EAST"
-      @table.valid_position?({x: @x, y: @y + 1}) ? @y += 1 : Messages.invalid_move(@direction)
+      @table.valid_position?({place: {x: @x, y: @y + 1}}) ? @y += 1 : Messages.invalid_move(@direction)
     when "WEST"
-      @table.valid_position?({x: @x, y: @y - 1}) ? @y -= 1 : Messages.invalid_move(@direction)
+      @table.valid_position?({place: {x: @x, y: @y - 1}}) ? @y -= 1 : Messages.invalid_move(@direction)
     end
   end
 

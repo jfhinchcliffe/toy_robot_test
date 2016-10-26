@@ -32,7 +32,7 @@ class Command
   def format_place(command)
     formatted_place = {}
     command = command.split(' ').last.split(',')
-    formatted_place[:x], formatted_place[:y], formatted_place[:direction] = command[0].to_i, command[1].to_i, command[2]
+    formatted_place[:x], formatted_place[:y], formatted_place[:direction] = command[0].to_i, command[1].to_i, command[2].upcase
     formatted_place
   end
 

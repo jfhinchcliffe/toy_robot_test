@@ -15,6 +15,7 @@ class Interface
     system "clear"
     exit = false
     while exit != true
+      puts "=" * 20
       puts "TABLE"
       puts "#{@table.x_max} #{@table.y_max}"
       puts "ROBOT"
