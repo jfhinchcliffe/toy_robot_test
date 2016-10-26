@@ -1,9 +1,29 @@
 #Toy Robot Simulator
 
-I'm on a 1 week break at bootcamp right now. Trying to do the Toy Robot Test to:
-- Keep my Ruby sharp
-- Practice TDD
-- Get an idea of the kinds of code that junior devs are expected to know
+- Robot
+  - is placed
+  - Moves and turns
+  - Has a direction
+  - Has x / y coordinates
+
+- Table
+  - Reference point for coordinates
+  - Has size
+  - Has valid coordinates
+
+- Movement
+  - Returns updated coordinates if move is valid
+  - Has proposed x / y coordinates
+
+- Interface
+  - Takes commands from user
+
+- Command
+  - validates command
+  - executes command
+
+- Messages
+  - displays messages for user
 
 ## Running the program
 - Download

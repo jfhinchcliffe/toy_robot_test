@@ -5,13 +5,21 @@ class Robot
 
   VALID_DIRECTIONS = ["NORTH", "EAST", "SOUTH", "WEST"]
 
-  attr_reader :x, :y, :direction
+  attr_accessor :x, :y, :direction
 
   def initialize(args)
-    @x = args[:x]
-    @y = args[:y]
-    @direction = args[:direction]
+    @x = args[:x] || nil
+    @y = args[:y] || nil
+    @direction = args[:direction] || nil
     @table = args[:table]
+    @placed = false
+  end
+
+  def place(commands)
+    @placed = true
+    @x = commands[:x]
+    @y = commands[:y]
+    @direction = commands[:direction]
   end
 
   def turn(turn)
