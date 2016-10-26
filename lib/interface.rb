@@ -15,8 +15,10 @@ class Interface
     system "clear"
     exit = false
     while exit != true
-      puts @table
-      puts @robot
+      puts "TABLE"
+      puts "#{@table.x_max} #{@table.y_max}"
+      puts "ROBOT"
+      puts puts "#{@robot.x} #{@robot.y} #{@robot.direction}"
       puts @command
       puts "Toy Robot Simulator 🤖 "
       puts "=" * 20
@@ -38,8 +40,7 @@ class Interface
         exit = true
       else
         command = @command.format(command, @table, @robot)
-        @command.verify?(command)
-        @command.execute(command)
+        @command.verify?(command) ? @command.execute(command) : Messages.invalid_command(command[:instruction])
       end
     end
 

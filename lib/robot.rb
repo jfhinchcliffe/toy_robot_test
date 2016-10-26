@@ -17,9 +17,9 @@ class Robot
 
   def place(commands)
     @placed = true
-    @x = commands[:x]
-    @y = commands[:y]
-    @direction = commands[:direction]
+    @x = commands[:place][:x]
+    @y = commands[:place][:y]
+    @direction = commands[:place][:direction]
   end
 
   def turn(turn)

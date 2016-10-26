@@ -1,3 +1,4 @@
+
 class Command
 
   VALID_COMMANDS = ["PLACE", "MOVE", "LEFT", "RIGHT", "REPORT"]
