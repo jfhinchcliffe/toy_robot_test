@@ -2,11 +2,12 @@ class Command
 
   VALID_COMMANDS = ["PLACE", "MOVE", "LEFT", "RIGHT", "REPORT"]
 
-  def format(command_string)
+  def format(command_string, table, robot)
     split_command = command_string.split(' ')
     command = {}
-    command[:instruction] = split_command[0]
+    command[:instruction] = split_command[0].upcase
     command[:place] = format_place(split_command[1]) if split_command.length > 1
+    command[:table], command[:robot] = table, robot
     command
   end
 
@@ -21,17 +22,17 @@ class Command
     when "MOVE"
       commands[:robot].move
     when "LEFT", "RIGHT"
-      puts commands[:instruction]
       commands[:robot].turn(commands[:instruction])
-
-    # when "REPORT"
-
+    when "REPORT"
+      commands[:robot].report
     end
   end
 
   def format_place(command)
+    formatted_place = {}
     command = command.split(' ').last.split(',')
-    command[0], command[1], command[2] = command[0].to_i, command[1].to_i, command[2]
+    formatted_place[:x], formatted_place[:y], formatted_place[:direction] = command[0].to_i, command[1].to_i, command[2]
+    formatted_place
   end
 
 end

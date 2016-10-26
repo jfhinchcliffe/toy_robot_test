@@ -11,17 +11,15 @@ require 'robot'
 
   it "formats a single command into hash" do
     command = "THIS"
-    output = {instruction: "THIS"}
-    expect(@command.format(command)).to eq output
+    result = @command.format(command, @table, @robot)
+    expect(result[:instruction]).to eq "THIS"
   end
 
   it "formats a place command into hash" do
     command = "PLACE 1,1,NORTH"
-    returned_instruction = "PLACE"
-    returned_place_array = [1,1,"NORTH"]
-    p = @command.format(command)
-    expect(p[:instruction]).to eq returned_instruction
-    expect(p[:place]).to eq returned_place_array
+    returned_place_hash = {x: 1, y: 1, direction: "NORTH"}
+    p = @command.format(command, @table, @robot)
+    expect(p[:place]).to eq returned_place_hash
   end
 
   it "verifies valid commands" do
@@ -34,11 +32,6 @@ require 'robot'
   it "rejects invalid commands" do
     invalid_command = {instruction: "PLOp", place: [1,2,"SOUTH"]}
     expect(@command.verify?(invalid_command)).to be false
-  end
-
-  it "formats place information to array" do
-    formatted_value = @command.format_place("PLACE 1,2,NORTH")
-    expect(formatted_value).to eq [1,2,"NORTH"]
   end
 
   it "executes the place command" do
@@ -59,15 +52,17 @@ require 'robot'
     commands = {instruction: "LEFT", robot: @robot}
     @command.execute(commands)
     expect(@robot.direction).to eq "NORTH"
-    puts @robot.direction
     commands = {instruction: "RIGHT", robot: @robot}
-    puts @robot.direction
-    commands = {instruction: "RIGHT", robot: @robot}
-    puts @robot.direction
-    @robot.turn("LEFT")
-    commands = {instruction: "LEFT", robot: @robot}
-    puts @robot.direction
+    3.times do
+      @command.execute(commands)
+    end
     expect(@robot.direction).to eq "WEST"
+  end
+
+  it "reports position and direction" do
+    commands = {instruction: "REPORT", robot: @robot}
+    p = @command.execute(commands)
+    expect(p).to eq "1,4,WEST"
   end
 
 

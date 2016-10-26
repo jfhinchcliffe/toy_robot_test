@@ -3,24 +3,25 @@ require_relative "./table.rb"
 require_relative "./command.rb"
 class Interface
 
+  attr_reader :command
+
   def initialize
     @table = Table.new
     @robot = Robot.new({table: @table})
+    @command = Command.new
   end
 
   def menu
     system "clear"
     exit = false
     while exit != true
+      puts @table
+      puts @robot
+      puts @command
       puts "Toy Robot Simulator 🤖 "
       puts "=" * 20
       puts "Move a toy robot around a 5x5 table"
       puts "valid coordinates range from 0,0 (south west corner) to 4,4 (north east corner)"
-      if @robot
-        Messages.robot_placed({x: @robot.x, y: @robot.y, direction: @robot.direction}) #{@robot.x}, #{@robot.y}, #{@robot.direction}"
-      else
-        puts "Robot has NOT been placed. Please use the place command"
-      end
       puts "Valid commands are:"
       puts "PLACE X,Y,DIRECTION (North, East, South or West)"
       puts "MOVE"
@@ -36,7 +37,9 @@ class Interface
       when "x"
         exit = true
       else
-        split_command(command)
+        command = @command.format(command, @table, @robot)
+        @command.verify?(command)
+        @command.execute(command)
       end
     end
 
