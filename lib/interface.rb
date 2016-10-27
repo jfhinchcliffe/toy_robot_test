@@ -1,13 +1,10 @@
-require_relative "./robot.rb"
-require_relative "./table.rb"
 require_relative "./command.rb"
+
 class Interface
 
   attr_reader :command
 
   def initialize
-    @table = Table.new
-    @robot = Robot.new({table: @table})
     @command = Command.new
   end
 
@@ -15,12 +12,6 @@ class Interface
     system "clear"
     exit = false
     while exit != true
-      puts "=" * 20
-      puts "TABLE"
-      puts "#{@table.x_max} #{@table.y_max}"
-      puts "ROBOT"
-      puts puts "#{@robot.x} #{@robot.y} #{@robot.direction}"
-      puts @command
       puts "Toy Robot Simulator 🤖 "
       puts "=" * 20
       puts "Move a toy robot around a 5x5 table"
@@ -40,61 +31,9 @@ class Interface
       when "x"
         exit = true
       else
-        command = @command.format(command, @table, @robot)
-        @command.verify?(command) ? @command.execute(command) : Messages.invalid_command(command[:instruction])
+        @command.verify?(command) ? @command.execute : Messages.invalid_command(command)
       end
     end
-
   end
-  #
-  # def self.split_command(command)
-  #   commands = command.upcase.split(' ')
-  #   verify_command?(commands.first) ? execute_command(commands) : Messages.invalid_command(commands.first)
-  # end
-  #
-  # def self.verify_command?(command)
-  #   VALID_COMMANDS.include?(command)
-  # end
-  #
-  # def self.execute_command(commands)
-  #   command = commands.shift
-  #   if @robot == false && command != "PLACE"
-  #     Messages.robot_not_placed
-  #   else
-  #     case command
-  #     when "PLACE"
-  #       commands.length > 0 ? place(commands) : Messages.robot_not_placed
-  #     when "MOVE"
-  #       @robot.move
-  #     when "LEFT", "RIGHT"
-  #       @robot.turn(command)
-  #     when "REPORT"
-  #       puts @robot.report
-  #     end
-  #   end
-  # end
-  #
-  # def self.place(commands)
-  #   x, y, direction = format_place_input(commands)
-  #   create_table
-  #   if Robot.valid_directions.include?(direction) && @table.valid_position?({x: x, y: y})
-  #     @robot = Robot.new({x: x, y: y, direction: direction, table: @table})
-  #   else
-  #     Messages.invalid_command("#{x} #{y} #{direction}")
-  #   end
-  # end
-  #
-  # def self.format_place_input(commands)
-  #   x_s, y_s, direction = commands.last.split(',')
-  #   [
-  #     x_s.to_i,
-  #     y_s.to_i,
-  #     direction
-  #   ]
-  # end
-  #
-  # def self.create_table
-  #   @table = Table.new({x: 4, y: 4})
-  # end
 
 end

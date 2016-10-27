@@ -10,7 +10,7 @@ class Table
   end
 
   def valid_position?(args)
-    args[:place][:x].between?(@x_min, @x_max) && args[:place][:y].between?(@y_min, @y_max)
+    args[:x].between?(@x_min, @x_max) && args[:y].between?(@y_min, @y_max)
   end
 
   def defaults

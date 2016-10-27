@@ -17,9 +17,9 @@ class Robot
 
   def place(commands)
     @placed = true
-    @x = commands[:place][:x]
-    @y = commands[:place][:y]
-    @direction = commands[:place][:direction]
+    @x = commands[:x]
+    @y = commands[:y]
+    @direction = commands[:direction]
   end
 
   def turn(turn)
@@ -30,20 +30,20 @@ class Robot
     "#{@x},#{@y},#{@direction}"
   end
 
-  def self.valid_directions
+  def valid_directions
     VALID_DIRECTIONS
   end
 
   def move
     case @direction
     when "NORTH"
-      @table.valid_position?({place: {x: @x + 1, y: @y}}) ? @x += 1 : Messages.invalid_move(@direction)
+      @table.valid_position?({x: @x + 1, y: @y}) ? @x += 1 : Messages.invalid_move(@direction)
     when "SOUTH"
-      @table.valid_position?({place: {x: @x - 1, y: @y}}) ? @x -= 1 : Messages.invalid_move(@direction)
+      @table.valid_position?({x: @x - 1, y: @y}) ? @x -= 1 : Messages.invalid_move(@direction)
     when "EAST"
-      @table.valid_position?({place: {x: @x, y: @y + 1}}) ? @y += 1 : Messages.invalid_move(@direction)
+      @table.valid_position?({x: @x, y: @y + 1}) ? @y += 1 : Messages.invalid_move(@direction)
     when "WEST"
-      @table.valid_position?({place: {x: @x, y: @y - 1}}) ? @y -= 1 : Messages.invalid_move(@direction)
+      @table.valid_position?({x: @x, y: @y - 1}) ? @y -= 1 : Messages.invalid_move(@direction)
     end
   end
 
