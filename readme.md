@@ -1,41 +1,41 @@
 #Toy Robot Simulator
 
-- Robot
-  - is placed
-  - Moves and turns
-  - Has a direction
-  - Has x / y coordinates
-
-- Table
-  - Reference point for coordinates
-  - Has size
-  - Has valid coordinates
-
-- Movement
-  - Returns updated coordinates if move is valid
-  - Has proposed x / y coordinates
+Having a go at the Toy Robot Test. 
 
 - Interface
-  - Takes commands from user
+  - Only exists to capture input and display menu
 
 - Command
-  - validates command
+  - verifies command
+    - resets instruction value
+    - formats command
+    - checks that the command is a valid one
+    - if command is place, checks that the subsequent string is valid
+    - if robot isn't yet placed, reject any other command
+    - set command instruction value to valid command
   - executes command
 
+- Robot
+ - can be placed
+ - can be turned
+ - can report whereabouts
+ - has a set of valid directions to validate against
+ - can move (where table allows)
+
+- Table
+  - has a min and max value for x and y coordinates
+  - validates a position against the min / max x / y coordinates
+
 - Messages
-  - displays messages for user
+  - Formats and displays output from Robot (more user friendly)
 
 ## Running the program
 - Download
 - Navigate to root directory
-- run ```irb```
-- type ```require ('./lib/menu.rb')```
-- type ```Menu.menu```
+- run ```ruby run.rb```
 
 ##Todo
 - Write tests for interface.rb (didn't think they would really be required until I did it)
-- Clean up interface and provide meaningful user feedback
-- Should Table be a class or a module? Works as a module, but not sure if this is the right way to do it
 
 ## Description:
 The application is a simulation of a toy robot moving on a square tabletop, of dimensions 5 units x 5 units.

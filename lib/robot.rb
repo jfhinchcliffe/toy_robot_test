@@ -5,13 +5,13 @@ class Robot
 
   VALID_DIRECTIONS = ["NORTH", "EAST", "SOUTH", "WEST"]
 
-  attr_accessor :x, :y, :direction
+  attr_accessor :x, :y, :direction, :placed
 
-  def initialize(args)
-    @x = args[:x] || nil
-    @y = args[:y] || nil
-    @direction = args[:direction] || nil
-    @table = args[:table]
+  def initialize(table)
+    @x = nil
+    @y = nil
+    @direction = nil
+    @table = table
     @placed = false
   end
 
@@ -20,14 +20,17 @@ class Robot
     @x = commands[:x]
     @y = commands[:y]
     @direction = commands[:direction]
+    report
   end
 
   def turn(turn)
     rotate_direction(get_new_direction_index(turn))
+    Messages.robot_turned(turn)
   end
 
   def report
-    "#{@x},#{@y},#{@direction}"
+    coordinates = {x: @x, y: @y, direction: @direction}
+    Messages.current_coordinates(coordinates)
   end
 
   def valid_directions
@@ -45,6 +48,7 @@ class Robot
     when "WEST"
       @table.valid_position?({x: @x, y: @y - 1}) ? @y -= 1 : Messages.invalid_move(@direction)
     end
+    report
   end
 
   def get_new_direction_index(turn)

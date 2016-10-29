@@ -3,40 +3,32 @@ require_relative "./robot.rb"
 
 class Command
 
-  attr_accessor :instruction, :robot
+  VALID_COMMANDS = ["PLACE", "MOVE", "LEFT", "RIGHT", "REPORT"]
+  attr_reader :instruction
 
   def initialize
     @instruction = {}
     @table = Table.new
-    @robot = Robot.new({table: @table})
+    @robot = Robot.new(@table)
   end
-
-  VALID_COMMANDS = ["PLACE", "MOVE", "LEFT", "RIGHT", "REPORT"]
 
   def verify?(command)
-    format(command)
-  end
-
-  def format(command_string)
-    split_command = command_string.split(' ')
-    @instruction[:command] = split_command.shift.upcase
-    return false unless VALID_COMMANDS.include?(@instruction[:command])
-    puts "SCL"
-    puts split_command.length
-    gets
-    if @instruction[:command] == "PLACE"
-      @instruction[:place] = format_place(split_command) if split_command.length == 1
-      return false if split_command.length == 0
-    else
-      @instruction[:place] = nil
+    reset_instruction
+    command = format(command)
+    return false unless VALID_COMMANDS.include?(command[0])
+    return false if command[0] == "PLACE" && check_place?(command[1]) == false
+    if command[0] != "PLACE" && @robot.placed == false
+      Messages.robot_not_placed
+      return false
     end
+    set_instruction(command)
     true
   end
 
   def execute
     case @instruction[:command]
     when "PLACE"
-      @table.valid_position?(@instruction[:place]) ? @robot.place(@instruction[:place]) : Messages.invalid_command("#{commands[:x]} #{commands[:y]} #{commands[:direction]}")
+      @table.valid_position?(@instruction[:place]) ? @robot.place(@instruction[:place]) : Messages.invalid_coordinates(@instruction[:place])
     when "MOVE"
       @robot.move
     when "LEFT", "RIGHT"
@@ -44,22 +36,44 @@ class Command
     when "REPORT"
       @robot.report
     end
-    puts "ROBOT"
-    puts @robot.x
-    puts @robot.y
-    puts @robot.direction
-    gets
   end
 
-  def format_place(command)
-    formatted_place = {}
-    command = command.last.split(',')
-    if command.length == 3 && @robot.valid_directions.include?(command.last.upcase)
-      formatted_place[:x], formatted_place[:y], formatted_place[:direction] = command[0].to_i, command[1].to_i, command[2].upcase
+  #tested
+  def format(command)
+    command = command.upcase.split(' ')
+  end
+
+  #tested
+  def format_place(place_command)
+    place = {}
+    formatted_command = place_command.split(',')
+    place[:x] = formatted_command[0].to_i
+    place[:y] = formatted_command[1].to_i
+    place[:direction] = formatted_command[2]
+    place
+  end
+
+  #tested
+  def check_place?(place)
+    if place == nil
+      return false
     else
-      formatted_place = nil
+      place = format_place(place)
+      unless @robot.valid_directions.include?(place[:direction]) && place.length == 3
+        return false
+      end
     end
-    formatted_place
+    true
+  end
+
+  def reset_instruction
+    @instruction = {}
+  end
+
+  #tested
+  def set_instruction(validated_command)
+    @instruction[:command] = validated_command[0]
+    @instruction[:place] = format_place(validated_command[1]) if @instruction[:command] == "PLACE"
   end
 
 end

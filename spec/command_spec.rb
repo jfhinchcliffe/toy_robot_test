@@ -7,63 +7,69 @@ require 'robot'
     @command = Command.new
   end
 
-  it "formats a single command into hash" do
-    command_string = "PLACE 1,1,NORTH"
-    return_hash = {x: 1, y: 1, direction: "NORTH"}
-    result = @command.format(command_string)
-    expect(@command.instruction[:command]).to eq "PLACE"
-    expect(@command.instruction[:place]).to eq return_hash
+  context 'only allows valid input' do
+
+    it "reject all commands except a valid place when robot isn't placed" do
+      expect(@command.verify?("PLACE")).to be false
+      expect(@command.check_place?("LEFT")).to be false
+      expect(@command.check_place?("PLACE 1,1,WEST")).to be true
+    end
+
+    it "rejects invalid commands" do
+      expect(@command.verify?("SNIPPY")).to be false
+      expect(@command.check_place?("place")).to be false
+    end
+
+    it "accepts all valid commands when robot is placed" do
+      @command.verify?("PLACE 3,2,SOUTH")
+      #sets @instruction with valid value
+      @command.execute
+      expect(@command.verify?("LEFT")).to be true
+      expect(@command.verify?("RIGHT")).to be true
+      expect(@command.verify?("REPORT")).to be true
+    end
   end
 
-  # it "formats a place command into hash" do
-  #   command = "PLACE 1,1,NORTH"
-  #   returned_place_hash = {x: 1, y: 1, direction: "NORTH"}
-  #   p = @command.format(command, @table, @robot)
-  #   expect(p[:place]).to eq returned_place_hash
-  # end
-  #
-  # it "verifies valid commands" do
-  #   valid_command = {instruction: "PLACE", place: [1,2,"SOUTH"]}
-  #   expect(@command.verify?(valid_command)).to be true
-  #   valid_command = {instruction: "LEFT"}
-  #   expect(@command.verify?(valid_command)).to be true
-  # end
-  #
-  # it "rejects invalid commands" do
-  #   invalid_command = {instruction: "PLOp", place: [1,2,"SOUTH"]}
-  #   expect(@command.verify?(invalid_command)).to be false
-  # end
-  #
-  # it "executes the place command" do
-  #   commands = {instruction: "PLACE", table: @table, robot: @robot, x: 1, y: 3, direction: "EAST" }
-  #   @command.execute(commands)
-  #   expect(@robot.x).to eq 1
-  #   expect(@robot.y).to eq 3
-  # end
-  #
-  # it "executes the move command" do
-  #   commands = {instruction: "MOVE", table: @table, robot: @robot, x: 1, y: 3, direction: "EAST" }
-  #   @command.execute(commands)
-  #   expect(@robot.x).to eq 1
-  #   expect(@robot.y).to eq 4
-  # end
-  #
-  # it "turns" do
-  #   commands = {instruction: "LEFT", robot: @robot}
-  #   @command.execute(commands)
-  #   expect(@robot.direction).to eq "NORTH"
-  #   commands = {instruction: "RIGHT", robot: @robot}
-  #   3.times do
-  #     @command.execute(commands)
-  #   end
-  #   expect(@robot.direction).to eq "WEST"
-  # end
-  #
-  # it "reports position and direction" do
-  #   commands = {instruction: "REPORT", robot: @robot}
-  #   p = @command.execute(commands)
-  #   expect(p).to eq "1,4,WEST"
-  # end
+  context 'formats the command input' do
+    it 'capitalises and splits input into an array' do
+      result = @command.format("this is input")
+      expect(result.length).to eq 3
+      expect(result[0]).to eq "THIS"
+      expect(result[1]).to eq "IS"
+      expect(result[2]).to eq "INPUT"
+    end
+
+    it "only allows valid directions" do
+      expect(@command.check_place?("1,1,NORTH")).to be true
+      expect(@command.check_place?("1,1,NORth")).to be false
+      expect(@command.check_place?("1,1,MRSNIPS")).to be false
+    end
+
+    it "correctly formats place command (integer, integer, string)" do
+      result = @command.format_place("1,1,WEST")
+      expect(result[:x]).to be_kind_of(Integer)
+      expect(result[:y]).to be_kind_of(Integer)
+      expect(result[:direction]).to be_kind_of(String)
+    end
+
+    it "sets instruction correctly for place command" do
+      command = Command.new
+      result = {x: 3, y: 2, direction: "WEST"}
+      command.set_instruction(["PLACE","3,2,WEST"])
+      expect(command.instruction[:command]).to eq "PLACE"
+      expect(command.instruction[:place]).to eq result
+    end
+
+    it "sets instruction correctly for move, left, right, report commands" do
+      command = Command.new
+      command.set_instruction(["MOVE"])
+      expect(command.instruction[:command]).to eq "MOVE"
+      expect(command.instruction[:direction]).to eq nil
+    end
+
+
+
+  end
 
 
 end

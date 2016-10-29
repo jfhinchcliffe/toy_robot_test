@@ -15,25 +15,15 @@ describe Table do
     expect(result).to eq false
   end
 
-  # it "returns true when a potential move is valid" do
-  #   result = @table.valid_move?({x: 2,y: 2,direction: "SOUTH"})
-  #   expect(result).to eq true
-  # end
-  #
-  # it "returns false when a potential move is invalid" do
-  #   result = @table.valid_move?({x: 3,y: 2,direction: "NORTH"})
-  #   expect(result).to eq false
-  # end
+  it "returns true when a potential move is valid" do
+    result = @table.valid_position?({x: 2,y: 2})
+    expect(result).to eq true
+  end
 
+  it "returns false when a potential move is invalid" do
+    result = @table.valid_position?({x: 4,y: 2})
+    expect(result).to eq false
+  end
 
-  #
-  # it "does not allow the robot to move off the table" do
-  #   p = Table.move(0,0,"SOUTH")
-  #   expect(p).to eq [0,0,"SOUTH"]
-  #   p = Table.move(5,3,"NORTH")
-  #   expect(p).to eq [5,3,"NORTH"]
-  #   p = Table.move(0,0,"WEST")
-  #   expect(p).to eq [0,0,"WEST"]
-  # end
 
 end
