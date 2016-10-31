@@ -9,7 +9,7 @@ class Interface
   def menu
     system "clear"
     exit = false
-    while exit != true
+    until exit == true
       puts "Toy Robot Simulator 🤖 "
       puts "=" * 20
       puts "Move a toy robot around a 5x5 table"
@@ -23,9 +23,9 @@ class Interface
       puts "- X to exit"
       puts "Commands are not case sensitive."
       print "Enter command > "
-      command = gets.strip
+      command = gets.strip.upcase
       system "clear"
-      if command == "x" || command == "X"
+      if command == "X"
         exit = true
       elsif command.empty?
         Messages.blank_input
