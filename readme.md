@@ -89,3 +89,4 @@ Any move that would cause the robot to fall must be ignored.
 
 Testing token leaking...
 bkua_84911bca615b562fdf23482387067d8e71b48339
+bkua_b0a494b82d1164f97b24ec6f7222c24ff97e1b77
